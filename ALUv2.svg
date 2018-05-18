@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="841.89px" height="595.28px" viewBox="0 0 841.89 595.28" enable-background="new 0 0 841.89 595.28" xml:space="preserve">
+<g id="rectbg" display="none">
+	<rect x="-1.5" y="-4" display="inline" fill="#FFFFFF" width="847.445" height="605.14"/>
+</g>
+<g id="gateGray">
+	<line fill="none" stroke="#888888" stroke-miterlimit="10" x1="678.723" y1="192" x2="678.723" y2="80"/>
+	<line fill="none" stroke="#888888" stroke-miterlimit="10" x1="387.277" y1="255.5" x2="387.277" y2="79.5"/>
+	<polyline fill="none" stroke="#888888" stroke-miterlimit="10" points="531.277,274.5 531.277,139.86 387.277,139.86 	"/>
+	<line fill="none" stroke="#888888" stroke-miterlimit="10" x1="530" y1="351.833" x2="530" y2="438.167"/>
+</g>
+<g id="gateLine">
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="204" y1="269" x2="373.945" y2="269"/>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="204" y1="337" x2="508" y2="337"/>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="405.445" y1="287" x2="508.333" y2="287"/>
+	<line fill="none" stroke="#240C0D" stroke-width="2" stroke-miterlimit="10" x1="497.612" y1="202" x2="660" y2="202"/>
+	<line fill="none" stroke="#240C0D" stroke-width="2" stroke-miterlimit="10" x1="496.5" y1="250" x2="659.512" y2="250"/>
+	<line fill="none" stroke="#240C0D" stroke-width="2" stroke-miterlimit="10" x1="553" y1="312" x2="658.778" y2="312"/>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="621.112" y1="362" x2="659.778" y2="362"/>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="324.333" y1="304" x2="374.362" y2="304"/>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="699" y1="283.167" x2="760.112" y2="283.167"/>
+</g>
+<g id="gatePoly">
+	<polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="468,207 458,207 458,337 204,337 	"/>
+	<polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="468,197 440,197 440,287 405,287 	"/>
+	<polyline fill="none" stroke="#240C0D" stroke-width="2" stroke-miterlimit="10" points="553,312 565,312 565,362 578,362 	"/>
+	<polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="204,269 253,269 253,304 290,304 	"/>
+	<polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="405,287 440,287 440,245 468.778,245 	"/>
+	<polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="204,337 458,337 458,255 470,255 	"/>
+</g>
+<g id="gateNoLit">
+	<polygon fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="290,292 290,316 318,304 	"/>
+	<circle fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" cx="322" cy="304" r="2.5"/>
+	<polygon fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="699,363 659.74,385.888 659.74,182.461 
+		699,203 	"/>
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M487.5,192.5h-20v20h20c5.523,0,10-4.477,10-10
+		S493.023,192.5,487.5,192.5z"/>
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M468.381,239.5c-0.298,0-0.592,0.005-0.887,0.009
+		c1.28,3.253,1.99,6.789,1.99,10.491s-0.71,7.238-1.99,10.491c0.295,0.004,0.59,0.009,0.887,0.009
+		c14.977,0,27.119-4.701,27.119-10.5S483.358,239.5,468.381,239.5z"/>
+	<polygon fill="none" stroke="#240C0D" stroke-width="2" stroke-miterlimit="10" points="507.892,268.706 507.892,307.235 
+		529.821,312.875 507.737,318.514 507.737,357.358 552.221,345.923 552.221,279.982 	"/>
+	<polygon fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="620.882,368.535 577.698,368.535 
+		577.698,356.605 620.882,344.674 	"/>
+	
+		<text transform="matrix(1 0 0 1 539.945 313.7563)" stroke="#000000" stroke-miterlimit="10" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="12">+</text>
+	<polygon fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="404.32,312 374.32,322 374.32,252 
+		404.32,262 	"/>
+	<rect x="379.112" y="265.473" fill="none" width="8.667" height="47.333"/>
+	<text transform="matrix(1 0 0 1 379.1118 276.0333)"><tspan x="0" y="0" stroke="#000000" stroke-miterlimit="10" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="12">0</tspan><tspan x="0" y="28.8" stroke="#000000" stroke-miterlimit="10" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="12">1</tspan></text>
+	<rect x="665.778" y="198.64" fill="none" width="8.667" height="191.333"/>
+	<text transform="matrix(1 0 0 1 665.7785 209.2004)"><tspan x="0" y="0" stroke="#000000" stroke-miterlimit="10" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="12">0</tspan><tspan x="0" y="50.4" stroke="#000000" stroke-miterlimit="10" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="12">1</tspan><tspan x="0" y="100.8" stroke="#000000" stroke-miterlimit="10" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="12">2</tspan><tspan x="0" y="151.2" stroke="#000000" stroke-miterlimit="10" font-family="'AdobeSongStd-Light-GBpc-EUC-H'" font-size="12">3</tspan></text>
+</g>
+</svg>
