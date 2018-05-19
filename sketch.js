@@ -452,7 +452,7 @@ function createRegisterDivs() {
         }
     }
     var divPosX = [315, 455, 495, 529, 602, 671, 800]
-    var divPosY = [209, 412, 319, 257, 169, 255, 345]
+    var divPosY = [159, 362, 269, 207, 119, 205, 295]
     for (var i = 0; i < 7; i++) {
         var myX = $(window).width() * 0.3 + divPosX[i];
         var myY = 55 + divPosY[i];
