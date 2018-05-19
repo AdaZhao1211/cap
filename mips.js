@@ -5,7 +5,6 @@ String.prototype.getbit = function(st, ed) {
 function output(a, b) {
     a = +a;
     b = +b;
-    // if(a)
 }
 
 
@@ -59,6 +58,7 @@ var RegisterFile = {
         }
         if (this.WE3 == 1) {
             //RegWrite
+
             Registers.set(this.A3, this.WD3);
         }
     },
@@ -143,6 +143,7 @@ var DataMemory = {
         console.log("DataMemory")
         console.log("A, WD, WE, RD")
         console.log(this.A, this.WD, this.WE, this.RD)
+        console.log(this.memory)
         console.log("----------")
 
         var render_paths = {
@@ -174,6 +175,7 @@ var SignExtend = {
     },
     update: function() {
         this.output = this.input
+        // console.log("SignExtend ", SignExtend)
         MUX2.set("D1", this.output)
     },
     run: function() {
@@ -210,13 +212,16 @@ var ControlUnit = {
     setALUCon: function(func) {
         this.opcode = String(this.opcode)
         var aluop = String(digi(this.opcode.getbit(1, 0), 2))
+        // console.log("ALUOp, ", aluop)
+        //Return to ALU Decoder
         if (aluop == "00") {
             //add
             return "010";
-        } else if (aluop.charAt(1) == "1") {
+        } else if (aluop == "01") {
             //substract
             return "110";
-        } else if (aluop.charAt(1) == "0") {
+        } else if (aluop == "10") {
+            //look at func field
             if (func == "100000") {
                 //add
                 return "010"
@@ -233,6 +238,9 @@ var ControlUnit = {
                 //slt
                 return "111"
             }
+        }else if(aluop == "11"){
+            return null;
+            console.log("ALUOp error 11.")
         }
         return null;
     },
@@ -349,17 +357,6 @@ Multiplexer.prototype.set = function(prop, val) {
         this[prop] = val;
         flag = true;
     }
-
-    // if (prop === "D0") {
-    //     this.D0 = val;
-    //     flag = true;
-    // } else if (prop === "D1") {
-    //     this.D1 = val;
-    //     flag = true;
-    // } else if (prop === "S") {
-    //     this.S = val;
-    //     flag = true;
-    // }
 
     //If valid change, update output
     if (flag) {
@@ -510,10 +507,17 @@ var ALU = {
         } else if (this.control === "010") {
             //Add
             this.output = this.sa + this.sb;
+        } else if (this.control === "100") {
+            //A and notB
+            this.output = this.sa & (!this.sb)
+        } else if (this.control === "101") {
+            //A or notB
+            this.output = this.sa | (!this.sb)
         } else if (this.control === "110") {
             //Sub
             this.output = this.sa - this.sb;
         } else if (this.control === "111") {
+            //SLT
             this.output = (this.sa < this.sb) ? 1 : 0
         }
         this.zero = (this.output == 0)
@@ -592,6 +596,8 @@ var ALU = {
         values.push(F10);
         values.push(this.output)
         values.push(this.zero)
+        values.push(this.sa)
+        values.push(this.sb)
         return values;
     },
 
@@ -622,8 +628,10 @@ var ALU = {
             [Adder4.output, Adder3.output, Adder2.output, Adder1.output],
             // [r.charAt(1),r.charAt(2),r.charAt(3),r.charAt(4)],
             [Adder4.CarryIn, Adder3.CarryIn, Adder2.CarryIn, Adder1.CarryIn],
-            []
+            [],
+            [] //source
         ]
+        output[5] = [this.sa, this.sb]
 
         // Simulate Caryy- Lookahead Model ///
         var adders = [Adder1, Adder2, Adder3, Adder4]
@@ -639,8 +647,8 @@ var ALU = {
                 G.push(+i)
             }
         }
-        console.log("P",P)
-        console.log("G",G)
+        // console.log("P",P)
+        // console.log("G",G)
 
         for (var i in P) {
             switch(P[i]){
@@ -750,7 +758,7 @@ var MIPS = {
         ALU.print()
         DataMemory.print()
         MUX3.print()
-        console.log(Registers.getRegs())
+        // console.log(Registers.getRegs())
         console.log(DataMemory.memory)
     },
 
@@ -813,7 +821,7 @@ var MIPS = {
         var props = ["RegWrite", "RegDst", "ALUSrc", "ALUControl", "Branch", "MemWrite", "MemtoReg"]
         for (var i in props) {
             var e = props[i]
-            console.log("e+", ControlUnit[e])
+            // console.log("e+", ControlUnit[e])
             if (ControlUnit[e] == null) {
                 nums.push('X');
             } else {

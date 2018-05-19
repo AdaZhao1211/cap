@@ -41,36 +41,44 @@ function stepButtonClicked() {
         MIPS.run()
         MIPS.print()
 
+
         simulate(arr[PROGRAM_COUNTER]);
         renderRegisterValues(Registers.getRegs())
 
+        // First layer
         var r = MIPS.renderpaths()
         renderDatapath(r)
 
         var n = MIPS.rendernums()
-        console.log("nums", n)
         renderCUValues(n)
-        PROGRAM_COUNTER++;
-        renderAssemblyHighlight(PROGRAM_COUNTER)
 
-        console.log("ALUrender", ALU.render())
+
+        // Second layer
         renderGateDatapath(ALU.render())
 
         renderGateValue(ALU.render_value())
 
+        // Third layer
         var a = ALU.render_gates()
         renderAdderAdder(a[0], a[1], a[2], a[3], a[4])
-        //Show the status of 1st Adder in the Transistor level
+        renderAdderValue(a[5])
+        // Forth layer
         renderTransistor(Adder2.A, Adder2.B, Adder2.CarryIn)
 
+
+        PROGRAM_COUNTER++;
+        renderAssemblyHighlight(PROGRAM_COUNTER)
+
+        // console.log("ALUrender", ALU.render())
+
     } else {
-        alert("pc!")
+        alert("The End!")
     }
 }
 
 function resetButtonClicked() {
-  PROGRAM_COUNTER = 0;
-  renderAssemblyNoHighlight();
+    PROGRAM_COUNTER = 0;
+    renderAssemblyNoHighlight();
     removeTemps();
     resetRegisterDivs();
     renderCUValues(['', '', '', '', '', '', '']);
@@ -78,7 +86,7 @@ function resetButtonClicked() {
 
 }
 
-function removeTemps(){
+function removeTemps() {
     $("#svgTemp").children().remove();
     $("#gateTemp").children().remove();
     $("#adderTemp").children().remove();
@@ -126,6 +134,7 @@ function callAssemblyAPI(editorText) {
                 if (result.asm[i].text) {
                     returnString = result.asm[i].text
                     tempstring = returnString.replace(/ /g, '');
+                    //Ignore nop instruction
                     if (tempstring != "nop") {
                         resultString += result.asm[i].text;
                         resultString += "\n";
@@ -160,10 +169,10 @@ function renderAssemblyNoHighlight() {
 function renderRegisterValues(registerValues) {
     var registerDiv = $(".register");
     for (var i = 0; i < registerDiv.length; i++) {
-        if(registerDiv[i].innerHTML != registerValues[i]){
-          registerDiv[i].innerHTML = registerValues[i];
-          var registerFile = $("#registerFile").children()[i];
-          drawSVGRect("svgTemp", registerFile.x.animVal.value, registerFile.y.animVal.value);
+        if (registerDiv[i].innerHTML != registerValues[i]) {
+            registerDiv[i].innerHTML = registerValues[i];
+            var registerFile = $("#registerFile").children()[i];
+            drawSVGRect("svgTemp", registerFile.x.animVal.value, registerFile.y.animVal.value);
         }
     }
 }
@@ -186,6 +195,7 @@ function renderCUValues(CUValues) {
         t[i].innerHTML = CUValues[i];
     }
 }
+
 /****************** ALU ***********************/
 function renderGateValue(gateValues) {
     var gateText = $("#gateText").children();
@@ -225,10 +235,9 @@ function renderAdderAdder(A, B, output, carry, l) {
     }
     for (var i = 0; i < carry.length; i++) {
         if (carry[i] == 1) {
-            forDatapath("adderLine", "adderTemp", "#25ebd1", 3 - i);
+            forDatapath("adderLine", "adderTemp", "#25ebd1", 2 - i);
         }
     }
-    adderText[12].innerHTML = carry[3];
     for (var i = 0; i < l.length; i++) {
         var ttl = l[i];
         if (ttl != 13) {
@@ -240,9 +249,22 @@ function renderAdderAdder(A, B, output, carry, l) {
 
 
 }
-/******************* transistor ******************/
 
+function renderAdderValue(source){
+  var adderText = $("#adderText").children();
+  adderText[13].innerHTML = source[0];
+  adderText[15].innerHTML = source[1];
+}
+
+
+/******************* Transistor ******************/
+//Show the status of 1st Adder in the Transistor level
 function renderTransistor(a, b, c) {
+  var transText = $("#transText").children();
+transText[1].innerHTML = a;
+transText[3].innerHTML = b;
+transText[5].innerHTML = c;
+
     if (a == 1) {
         var achildren = $("#a").children();
         for (var i = 0; i < achildren.length; i++) {
@@ -416,7 +438,7 @@ function drawSVGPolygon(ID, datapoints) {
 function createRegisterDivs() {
     var registerFile = document.getElementById("registerFile");
     var startX = $(window).width() * 0.3 + 10 + registerFile.children[0].x.animVal.value;
-    var startY = 62 + registerFile.children[0].y.animVal.value;
+    var startY = 12 + registerFile.children[0].y.animVal.value;
     var svgContainer = $(".svgDiv");
     for (var i = 7; i >= 0; i--) {
         for (var j = 3; j >= 0; j--) {

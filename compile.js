@@ -31,7 +31,7 @@ function digi(num, length) {
 /*
 Registers
 OpTable: instructions to opcoce
-FuncTable: instructions to functio code (for R type)
+FuncTable: instructions to function code (for R type)
 index($sp): return the index of the register
 parse(8($sp)): return the shift 2 and indexed register
 getType(instr): return "R","I" or "J" based on the instruction
@@ -41,7 +41,7 @@ var Registers = {
     // "use strict";
     // values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 0, 0, 0, 0, 0],
 
-    values: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    values: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
     table: ["$zero", "$at", "$v0", "$v1", "$a0", "$a1", "$a2", "$a3",
         "$t0", "$t1", "$t2", "$t3", "$t4", "$t5", "$t6", "$t7",
@@ -129,7 +129,6 @@ var Registers = {
 
     parse: function(r_name) {
         if (r_name.indexOf("(") != -1) {
-
             var shifter = parseInt(r_name.slice(0, r_name.indexOf("(")));
             var nb = this.index(r_name.slice(r_name.indexOf("(") + 1, r_name.length - 1));
 
@@ -180,10 +179,11 @@ var Registers = {
     }
 }
 // Fill up the OpTable and FuncTable
-for(var key in Registers.database){
+for (var key in Registers.database) {
     element = Registers.database[key]
-    Registers.OpTable[key]=element[0]
-    Registers.FuncTable[key]=element[1]
+
+    Registers.OpTable[key] = element[0]
+    Registers.FuncTable[key] = element[1]
 
 }
 
@@ -194,7 +194,7 @@ An object to simulate each instruction
 Format(String),
 */
 function Format(instr) {
-    //instr: "  addiu $sp,$sp,-24"
+    //instr: "  addiu $sp,$sp,-24" -> "addiu $sp,$sp,-24"
     this.instr = instr.trim();
     if (this.instr.indexOf('#') != -1) {
         this.instr = this.instr.slice(0, this.instr.indexOf('#') - 1)
@@ -214,13 +214,21 @@ Format.prototype.recognize = function() {
         // return format;
         return
     }
+    /* addiu $sp,$sp,-24
+       this.op = "addiu"
+       para = "$sp,$sp,-24"
+    */
     this.op = this.instr.slice(0, this.instr.indexOf(' '))
     var para = this.instr.slice(this.instr.indexOf(' ') + 1)
 
 
     //ToDo: Manilupated Type!!!
-    if(this.op == 'addiu'){
+    if (this.op == 'addiu') {
         this.op = 'addi'
+    } else if (this.op == 'subiu') {
+        this.op = 'subi'
+    } else if (this.op == 'sltiu') {
+        this.op = 'slti'
     }
 
     this.type = Registers.getType(this.op)
@@ -232,6 +240,12 @@ Format.prototype.recognize = function() {
         this.shift = null;
         this.func = null;
 
+        /*
+        para = "$sp,$sp,-24"
+        rd: sp
+        rs: sp
+        rt: -24
+        */
         this.rd = para.slice(0, para.indexOf(','))
         this.rd = Registers.index(this.rd)
         para = para.slice(para.indexOf(',') + 1)
@@ -242,6 +256,7 @@ Format.prototype.recognize = function() {
 
 
         //Need to confirm which among rs, rt and rd to shift
+
         var a = Registers.parse(para)
         this.rt = a[1]
         this.shift = a[0]
@@ -337,9 +352,9 @@ function analyzeall(data) {
 //Output: analyzed instruction code
 // arr = analyze(data, 1)
 
-console.log("Analyzed instructions")
-arr = analyzeall(data);
-console.log(arr)
+// console.log("Analyzed instructions")
+// arr = analyzeall(data);
+// console.log(arr)
 
 
 
@@ -363,7 +378,7 @@ instruction = {operation:, rs:$2 rt:$sp,addr:}
 
 function simulate(format) {
     console.log("Simulate " + format.instr);
-
+    console.log(Registers.values);
     if (format.type === "R") {
         if (format.op.indexOf("add") != -1) {
             Registers.set(format.rd, Registers.get(format.rs) + (format.shift + Registers.get(format.rt)));
@@ -375,13 +390,20 @@ function simulate(format) {
 
     } else if (format.type === "I") {
         // console.log("I rt ", format.rs)
-        if (format.op === "lw" || format.op === "li" || format.op === "lui") {
+        if (format.op === "lw" || format.op === "lui") {
+
             Registers.set(format.rt, format.add + Registers.get(format.rs))
+        } else if (format.op === "li") {
+            Registers.set(format.rt, format.add + format.rs)
         } else if (format.op === "sw") {
-            Registers.set(format.add + Registers.get(format.rs), format.rt)
+            //write data to memory
+            // Registers.set(format.add + Registers.get(format.rs), format.rt)
+            DataMemory.memory[format.add + Registers.get(format.rs)] = Registers.get(format.rt)
         } else if (format.op.indexOf("add") != -1) {
+            // console.log("Simulate ",format.rt,format.rs, format.add,Registers.get(format.rs))
             Registers.set(format.rt, Registers.get(format.rs) + format.add)
         } else if (format.op === "move") {
+            console.log("Simulate ", format, format.add + format.rs)
             Registers.set(format.rt, Registers.get(format.rs))
         }
 
@@ -397,7 +419,6 @@ function simulate(format) {
             WRITE: null
         };
     }
-
 }
 
 
