@@ -32,7 +32,7 @@ function assembleButtonClicked() {
 }
 
 function stepButtonClicked() {
-    if (PROGRAM_COUNTER < arr.length) {
+    if (PROGRAM_COUNTER < arr.length-1) {
         removeTemps();
 
         console.log("counter+", PROGRAM_COUNTER)
